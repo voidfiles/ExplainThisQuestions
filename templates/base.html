@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>{% import compress %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{% block title%}{% block prependTitle %}{% endblock prependTitle %}InstaMedia{% block appendTitle %}{% endblock appendTitle %}{% endblock %}</title>
+	{% compressed_css 'main' %}
+</head>
+<body>
+<h1>InstaMedia</h1>
+<div class="page">
+	<div class="head">
+		<h2>{% block subTitle %}{% block prependSubTitle %}{% endblock prependSubTitle %}Just Enjoy Your Media{% block appendSubTitle %}{% endblock appendSubTitle %}{% endblock %}</h2>
+		<p>If you can't already tell, instapaper is the bomb, and their needs to be something like it for media, other then articles.This is instamedia. Note to Marco, think of the name as homage, pretty please.</p>
+	</div>
+	<div class="body">
+		{% block leftCol %}
+		<div class="leftCol">
+			{% block leftColContent %}{% endblock leftColContent %}
+		</div>
+		{% endblock leftCol %}
+		{% block rightCol %}
+		<div class="rightCol">
+			{% block rightColContent %}{% endblock rightColContent %}
+		</div>
+		{% endblock rightCol %}
+		
+		{% block main %}
+		<div class="main">
+			{% block mainContent %}{% endblock mainContent %}
+		</div>
+		{% endblock main %}
+	</div>
+	<div class="foot">
+		<h2>All your media belong to use</h2>
+	</div>
+</div>
+{% block scripts %}
+{% block prependScripts %}{% endblock prependScripts %}
+{% comment %}
+	{% compressed_js 'base' %}
+{% endcomment %}
+{% block appendScripts %}{% endblock appendScripts %}
+{% endblock scripts %}
+</body>
+</html>

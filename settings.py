@@ -1,4 +1,5 @@
 # Django settings for instamedia project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -6,6 +7,8 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
+
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 MANAGERS = ADMINS
 
@@ -45,17 +48,17 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = PROJECT_PATH + os.sep + 'static' + os.sep
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = "/static/"
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/admin_media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'z@&gewj-htg(9k4(zx)mwtjo(4i9!zn)8l$z4d7ygr6q63^npn'
@@ -81,6 +84,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    PROJECT_PATH + os.sep + 'templates',
 )
 
 INSTALLED_APPS = (
@@ -92,3 +96,39 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
 )
+
+
+COMPRESS_CSS = {
+    'main': {
+        'source_filenames': (
+            'css/lib/yui/reset-min.css',
+            'css/lib/oocss/core/grids.css',
+            'css/main.css'
+        ),
+        'output_filename': 'css/main_compressed.css',
+        'extra_context': {
+            'media': 'screen,projection',
+        },
+    }
+    # other CSS groups goes here
+}
+
+COMPRESS_JS = {
+    'base': {
+        'source_filenames': (
+            'js/lib/jquery-1.4.2.min.js',
+            'js/main.js',          
+        ),
+        'output_filename': 'js/base_compressed.js',
+    }
+}
+COMPRESS = True
+COMPRESS_AUTO = True
+
+
+
+
+
+LOCAL_SETTINGS = PROJECT_PATH + os.sep+ 'settings_local.py'
+
+if os.path.exists(LOCAL_SETTINGS): execfile(LOCAL_SETTINGS)
