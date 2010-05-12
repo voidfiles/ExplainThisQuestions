@@ -1,17 +1,45 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>{% import compress %}
+<head>{% load compressed %}
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>{% block title%}{% block prependTitle %}{% endblock prependTitle %}InstaMedia{% block appendTitle %}{% endblock appendTitle %}{% endblock %}</title>
+    <title>{% block title%}{% block prependTitle %}{% endblock prependTitle %}ExplainThis.org{% block appendTitle %}{% endblock appendTitle %}{% endblock %}</title>
 	{% compressed_css 'main' %}
+	{% block moreHead %}{% endblock moreHead %}
 </head>
 <body>
-<h1>InstaMedia</h1>
-<div class="page">
-	<div class="head">
+
+<div class="page liquid">
+	{% block pageHeader %}
+	<div class="head line">
+		<div class="leftCol">
+			{% block leftColHead %}
+			{% endblock leftColHead %}
+		</div>
+		{% comment %}
 		<h2>{% block subTitle %}{% block prependSubTitle %}{% endblock prependSubTitle %}Just Enjoy Your Media{% block appendSubTitle %}{% endblock appendSubTitle %}{% endblock %}</h2>
-		<p>If you can't already tell, instapaper is the bomb, and their needs to be something like it for media, other then articles.This is instamedia. Note to Marco, think of the name as homage, pretty please.</p>
+		{% endcomment %}
+		<div class="rightCol">
+			{% block rightColHead %}
+			{% endblock rightColHead %}
+		</div>
+		<div class="main">
+			{% block headMain %}
+			<h1 class="leftCol"><a href="/">ExplainThis.org</a></h1>
+			{% block headMainPrepend %}{% endblock headMainPrepend %}
+			{% comment %}
+			{% block headMainNavigation %}
+			<ul class="navigation horziontal">
+				{% block headMainNavigationPrepend %}{% endblock headMainNavigationPrepend %}
+
+				{% block headMainNavigationAppend %}{% endblock headMainNavigationAppend %}
+			</ul>
+			{% endblock headMainNavigation %}
+			{% endcomment %}
+			{% block headMainAppend %}{% endblock headMainAppend %}
+			{% endblock headMain %}
+		</div>
 	</div>
+	{% endblock pageHeader %}
 	<div class="body">
 		{% block leftCol %}
 		<div class="leftCol">
@@ -20,19 +48,66 @@
 		{% endblock leftCol %}
 		{% block rightCol %}
 		<div class="rightCol">
-			{% block rightColContent %}{% endblock rightColContent %}
+			{% block rightColContent %}
+			<em class="h2">Navigation</em>
+			<ul>
+				<li><a href="#">About ExplainThis</a></li>
+				<li><a href="#">How to ask a good question</a></li>
+				{% if user.is_anonymous %}
+					<li><a href="{% url auth_login %}?next={{request.META.PATH_INFO|urlencode}}">Login</a></li>
+				{% else %}
+					<li><a href="{% url create_subsite %}">Create a Subsite</a></li>
+					<li><a href="{% url user_profile request.user.get_profile.slug %}">Your Profile</a></li>				
+				{% endif %}
+			</ul>
+			{% endblock rightColContent %}
+			
+			{% block rightColContentAppend %}
+			<em class="h2">Questions</em>
+			<ul>
+				{% if site %}
+				<li><a href="{% url site_question_ask "site",site.slug %}">Ask a Question</a></li>
+				{% else %}
+				<li><a href="{% url ask_question %}">Ask a Question</a></li>
+				{% endif %}
+				<li><a href="#">Recent Questions</a></li>
+			</ul>
+			{% endblock rightColContentAppend %}
 		</div>
 		{% endblock rightCol %}
 		
 		{% block main %}
 		<div class="main">
-			{% block mainContent %}{% endblock mainContent %}
+			{% block mainContentPrepend %}
+			{% endblock mainContentPrepend %}
+			{% block mainContent %}
+				<div class="line">
+					<div class="unit size1of2">
+						<h2 class="sectionHeader">SubSites</h2>
+						{% for site in sites %}
+						<div class="question_display">
+							<a class="h4" href="{{site.get_absolute_url}}">{{site.name}}</a>
+						</div>
+						{% endfor %}
+					</div>
+					<div class="unit size1of2 lastUnit">
+						<h2 class="sectionHeader">Questions Accross the Network</h2>
+						{% for question in questions %}
+						<div class="question_display">
+							<a class="h4" href="{{question.get_absolute_url}}">{{question.title}}</a>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			{% endblock mainContent %}
 		</div>
 		{% endblock main %}
 	</div>
+	{% block footer %}
 	<div class="foot">
-		<h2>All your media belong to use</h2>
+		<p>Give us your best questions, and will give you are best answers.</p>
 	</div>
+	{% endblock footer %}
 </div>
 {% block scripts %}
 {% block prependScripts %}{% endblock prependScripts %}

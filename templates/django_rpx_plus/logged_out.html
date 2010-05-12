@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block mainContent %}
+<div id="login_box"><!-- extra wrapper for centering -->
+    
+    <h2 id="catchphrase">Logged out of <a href="{% url home %}">Example App</h2>
+    <p id="helper">
+        <a href="{% url auth_login %}">Click here to login again</a>
+    </p>
+    
+</div>
+{% endblock mainContent %}
+
+{% block appendScripts %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //Vertically center content
+            var top_margin = ($(window).height() - $('#content').height())/2;
+            top_margin = top_margin - 40;
+            if (top_margin < 0) top_margin = 10;
+            $('#content').css('margin-top', top_margin);
+        });
+    </script>
+{% endblock appendScripts %}

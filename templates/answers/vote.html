@@ -1,0 +1,13 @@
+{% extends "sites/main.html" %}
+{% block mainContentPrepend %}
+{% endblock mainContentPrepend %}
+{% block mainContent %}
+<div>
+	<em class="notice h1">You Want to {{direction}} vote:</em> <em class="h1 notice">{{answer.description}}</em>
+<div>
+<div>
+	<form action="" method="POST">{% csrf_token %}
+		<button type="submit" value="Yes" class="h3">Yes</button>
+		<a href="{{answer.get_absolute_url}}">No</a>
+	</form>
+{% endblock mainContent %}

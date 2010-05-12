@@ -1,0 +1,34 @@
+{% extends "sites/main.html" %}
+{% load uni_form_tags %}
+{% block mainContentPrepend %}<h2 class="underline">Subsite Admin</h2>{% endblock mainContentPrepend %}
+{% block mainContent %}
+<div class="line">
+	<div class="unit size1of2">
+		<h3>Current Administrators</h3>
+		{% if site.admins.count != 0 %}
+		<ul>
+			{% for user in site.admins.all %}
+				<li><a href="{{user.get_absolute_url}}">{{user.username}}</a> <a href="#" class="remove">remove</a></li>
+			{% endfor %}
+		</ul>
+		{% else %}
+		
+		{% endif%}
+	</div>
+	<div class="unit size1of2 lastUnit">
+		<h3>Add Extra Admins</h3>
+		<form action="" method="post" class="uniForm addAdmin">{% csrf_token %}
+		{{ addAdminForm|as_uni_form }}
+		<input type="submit" name="action" value="Add User">
+		</form>
+	</div>
+</div>
+<h2 class="underline space_above">Embedded Site Views</h2>
+<p>You can embed much of your subsites content on other websites. You probably already have a place where you have a community, so this will help bring the content to your community.</p>
+<p>The way you embed has a lot to do with what kind of access you have to your webserver, and what kind of knoweldge your have of programming in general. The embed methods listed below, are ordered from easiest to implment, and most likely compatiable with your system, too a little more knowledge then the average user required.</p>
+<h3>The IFrame Method</h3>
+<p>The IFrame method will in most cases work for you if you have like a blog, or a site that you don't have a lot of control over.</p>
+
+
+
+{% endblock mainContent %}

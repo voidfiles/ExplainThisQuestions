@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block mainContentPrepend %}
+{% endblock mainContentPrepend %}
+{% block mainContent %}
+	<div class="user_profile line">
+		<h2 class="sectionHeader">Profile for {{request.user.username}}</h2>
+		<div class="unit size1of2">
+			{% if request.user.question_set.count %}
+			<div><em class="h3">Questions you have asked</em></div>
+			<ul>
+				{% for question in request.user.question_set.all %}
+				<li><a href="{{question.get_absolute_url}}">{{question.title}}</a></li>
+				{% endfor %}
+			</ul>
+			{% else %}
+			<div><em class="h3">You have not asked any questions</em></div>
+			{% endif %}
+		</div>
+		<div class="unit size1of2 lastUnit">
+			{% if request.user.site_set.count %}
+			<div><em class="h3">Sites you administer</em></div>
+			<ul>
+				{% for site in request.user.site_set.all %}
+				<li><a href="{% url site_admin site.slug %}">{{site.name}}</a></li>
+				{% endfor %}
+			</ul>
+			{% else %}
+			<div><em class="h3">You do not administer any sites</em></div>
+			{% endif %}
+			
+		</div>
+	</div>
+	
+{% endblock mainContent %}

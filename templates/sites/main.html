@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load compressed %}
+{% block leftColHead %}
+{% endblock leftColHead %}
+{% block headMain %}<h1><a href="{{site.get_absolute_url}}">{{site.name}}</a></h1>{% endblock headMain %}
+{% block rightColHead %}
+<em class="h1"><a href="/">ExplainThis.org</a></em>
+{% endblock rightColHead %}
+{% block mainContentPrepend %}
+<div class="prompt clearfix ui-corner-all">
+	<form action="{% url site_question_ask "site",site.slug %}" method="GET">
+		<label class="s3">What's your question?</label>
+		<label class="s3 standing_by" for="question_title">Journalists are standing by.</label>
+		<label id="charcount" class="s3 char_count">140</label>
+		<textarea class="s5" id="question_title" name="title" type="text"></textarea><br>
+		<span class="message">Max 140 characters</span>
+		<input type="hidden" name="site_id" value="{{site.id}}">
+		<button class="s4" type="submit">Ask Your Question</button>
+	</form>
+</div>
+{% endblock mainContentPrepend %}
+{% block mainContent %}
+<h2 class="sectionHeader">Recent Questions on {{site.name}}</h2>
+{% for question in questions %}
+<div class="question_display">
+	<a class="h4" href="{{question.get_absolute_url}}">{{question.title}}</a>
+</div>
+{% endfor %}
+{% endblock mainContent %}
+{% block appendScripts %}
+	{% compressed_js 'site_frontpage' %}
+{% endblock appendScripts %}

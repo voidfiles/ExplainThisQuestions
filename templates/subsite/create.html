@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load compressed %}
+{% load uni_form_tags %} 
+{% block moreHead %}
+	{% compressed_css 'forms' %}
+{% endblock moreHead %}
+{% block mainContentPrepend %}
+{% endblock mainContentPrepend %}
+{% block mainContent %}
+	<h2 class="sectionHeader">Create a SubSite</h2>
+	<form action="" method="post" class="uniForm">{% csrf_token %}
+	{{ form|as_uni_form }}
+	<input type="submit" value="Create">
+	</form>
+{% endblock mainContent %}

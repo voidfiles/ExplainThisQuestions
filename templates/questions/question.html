@@ -1,0 +1,87 @@
+{% extends "sites/main.html" %}
+{% load voting_tags %}
+{% load comments %}
+{% load compressed %}
+{% load uni_form_tags %} 
+{% block moreHead %}
+	{% compressed_css 'forms' %}
+{% endblock moreHead %}
+{% block mainContentPrepend %}
+{% endblock mainContentPrepend %}
+{% block mainContent %}
+	<div class="question line">
+		{% score_for_object question as score %}
+		<h2 class="sectionHeader">{{question.title}} <span class="score">Votes: </span></h2>
+		<p>{{question.description}}</p>
+		<div class="line space_above">
+			{% if question.tags.all %}
+			<div class="unit size1of4">
+				<p class="h4">Tags<p>
+				<ul class="tags">
+					{% for tag in question.tags.all %}
+						<li><a href="#">{{tag}}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+			<div class="unit size1of4 lastUnit">
+				<p class="h4">Vote</p>
+				<ul>
+					<li>Score: {{score.score}}</li>
+					{% vote_by_user user on question as vote%}
+					{% if vote.vote == 1 %}
+					<li>Vote Up</li>
+					{% else %}
+					<li><a href="{% url vote_question question.id,"up" %}">Vote Up</a></li>
+					{% endif %}
+					{% if vote.vote == -1 %}
+					<li>Vote Down</li>
+					{% else %}
+					<li><a href="{% url vote_question question.id,"down" %}">Vote Down</a></li>
+					{% endif %}
+					{% if not vote%}
+					<li>Clear Vote</li>
+					{% else %}
+					<li><a href="{% url vote_question question.id,"clear" %}">Clear Vote</a></li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+		<div class="comments rightCol">
+			{% for comment in question.comments.all %}
+				{% include "comments/comment.html" %}
+			{% endfor %}
+			<span class="add_a_comment like_a">Add A Comment</span>
+			<div class="comment-form">
+				
+				<form action="{% url comment_post "question",question.id %}" method="post" class="uniForm">{% csrf_token %}
+					<div class="ctrlHolder">
+						<input type="text" class="textinput textInput" name="comment">
+					</div>
+					<input type="submit" name="submit" class="submit-post" value="Comment">
+				</form>
+			</div>
+			{% for comment in comment_list %}
+			    {% include "comments/comment.html" %}
+			{% endfor %}
+		</div>
+	</div>
+	<div class="answers">
+		<h3>Answers</h3>
+		{% for answer in question.sorted_answers %}
+			{% with answer.2 as answer %}
+				{% include "answers/answer.html" %}
+			{% endwith %}
+		{% endfor %}
+		<form action="" method="post" class="uniForm">{% csrf_token %}
+			{{answer_form|as_uni_form}}
+			<input type="submit" name="submit" class="submit-post" value="Answer">
+		</form>
+	</div>
+	
+{% endblock mainContent %}
+
+{% block appendScripts %}
+{% compressed_js 'base' %}
+{% compressed_js 'comments' %}
+{% endblock appendScripts %}

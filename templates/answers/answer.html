@@ -1,0 +1,38 @@
+<div class="answer line">{% load uni_form_tags %} {% load voting_tags %}{% score_for_object answer as score %}
+	<a name="answer{{answer.id}}">&nbsp;</a>
+	<p>{{answer.description}}<p>
+	<p class="h4">Vote</p>
+	<ul>
+		<li>Score: {{score.score}}</li>
+		{% vote_by_user user on answer as vote%}
+		{% if vote.vote == 1 %}
+		<li>Vote Up</li>
+		{% else %}
+		<li><a href="{% url vote_answer answer.id,"up" %}">Vote Up</a></li>
+		{% endif %}
+		{% if vote.vote == -1 %}
+		<li>Vote Down</li>
+		{% else %}
+		<li><a href="{% url vote_answer answer.id,"down" %}">Vote Down</a></li>
+		{% endif %}
+		{% if not vote%}
+		<li>Clear Vote</li>
+		{% else %}
+		<li><a href="{% url vote_answer answer.id,"clear" %}">Clear Vote</a></li>
+		{% endif %}
+	</ul>
+	<div class="comments rightCol">
+		{% for comment in answer.comments.all %}
+		    {% include "comments/comment.html" %}
+		{% endfor %}
+		<span class="add_a_comment like_a">Add A Comment</span>
+		<div class="comment-form">
+			<form action="{% url comment_post_answer "answer",question.id,answer.id %}" method="post" class="uniForm">{% csrf_token %}
+				<div class="ctrlHolder">
+					<input type="text" class="textinput textInput" name="comment">
+				</div>
+				<input type="submit" name="submit" class="submit-post" value="Comment">
+			</form>
+		</div>
+	</div>
+</div>

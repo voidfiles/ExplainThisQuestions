@@ -1,0 +1,149 @@
+body{font-family:"Myriad Pro","Segoe UI",Helvetica, Arial, sans-serif;}
+h1, .h1{font-size:196%; font-weight:normal; font-style: normal; color:#AE0345;}
+h2, .h2{font-size:167%; font-weight:normal; font-style: normal; color:#AE0345;}
+h3, .h3{font-size:146.5%; font-weight:normal; font-style: normal; color:#DF2B72;}
+h4, .h4{font-size:123.1%; font-weight:normal; font-style: normal; color: #333;}
+h5, .h5{font-size:108%; font-weight:bold; font-style: normal; color:#AE0345;}
+h6, .h6{font-size:108%; font-weight:normal; font-style: italic; color:#333;}
+
+/* ====== Default spacing ====== */
+h1, h2, h3, h4, h5, h6, ul, ol,dl, p,blockquote {padding:5px 5px 5px 0;}
+pre{margin: 10px;}
+table h1,table h2,table h3, table h4, table h5, table h6, table p, table ul, table ol, table dl{padding:0;}
+/* ====== Elements ====== */
+img{display:block;}
+em{font-style: italic;}
+strong{font-weight:bold;}
+hr{border: 5px solid #e2e2e2; border-width: 0 0 5px 0; margin: 20px 10px 10px 10px;}
+code{color:#0B8C8F;}
+
+.main{
+    padding-right:10px;
+}
+.liquid {
+    width:95%;
+    max-width:1200px;
+    margin:0 auto;
+}
+
+.horziontal li{
+    display:inline;
+}
+
+.head {
+    border-bottom:2px solid #eee;
+    margin-bottom:1em;
+}
+
+.head h1, .head ul {
+    padding-bottom:5px;
+}
+.head .navigation{
+    margin-top:1em;
+}
+
+.head .navigation a {
+    padding:5px 10px;
+}
+
+.prompt {
+    padding:10px;
+}
+.prompt label {
+    display:block;
+}
+.prompt .standing_by {
+    float:left;
+}
+
+.prompt textarea{
+    width:100%;
+    margin:0 auto;
+}
+
+.prompt .char_count {
+    float:right;
+}
+
+.prompt button{
+    float:right;
+}
+
+
+.sectionHeader {
+    border-bottom:1px solid #eee;
+}
+form.uniForm .ctrlHolder{
+    border-bottom:0f;
+}
+
+.uniForm .ctrlHolder input,.uniForm .ctrlHolder textarea{
+    width:100%;
+    border:1px solid #AAA;
+}
+
+#div_id_honeypot{
+    display:none;
+}
+
+.question .rightCol, .answer .rightCol {
+    width:66.66%;
+}
+
+body .uniForm .formHint, body .uniForm .blockLabels .formHint {
+    top:0;
+}
+.comment-form {
+    /*display:none;*/
+}
+.comment-form .submit-post {
+    float:right;
+}
+.add_a_comment {
+    display:inline;
+    text-align:right;
+    float:right;
+    display:none;
+}
+
+a, .like_a{ color: #036; font-weight:bold;text-decoration: none; cursor:pointer;}
+a:focus, a:hover,.like_a:focus, .like_a:hover { text-decoration: underline }
+a:visited { color:#005a9c; }
+
+.prompt {
+    background-color:#eee;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    border:1px solid #000;
+}
+.prompt .go_red {
+    color: red;
+}
+#question_title {
+    margin:10px 0 20px 0;
+}
+
+.error {
+    padding:10px;
+    background: #ffdfdf; 
+    border: 1px solid #df7d7d; 
+    border-width: 1px 0; 
+    color: #af4c4c;
+    margin:1em 0 1.5em 0;
+}
+
+.addAdmin .formHint {
+    margin-left:2em;
+    color:#444;
+}
+
+.ctrlHolder {
+    margin-bottom:1em;
+}
+
+.underline {
+    border-bottom:3px solid #eee;
+}
+.space_above {
+    margin-top:2em;
+}

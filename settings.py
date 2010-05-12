@@ -1,8 +1,15 @@
 # Django settings for instamedia project.
-import os
+import os, logging
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = '%(asctime)s %(levelname)s %(message)s',
+)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+logging.debug("Reading settings...")
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -70,6 +77,21 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.auth', #for user template var
+    #'django.core.context_processors.debug',
+    #'django.core.context_processors.i18n',
+    'django.core.context_processors.media', #for MEDIA_URL template var
+    'django.core.context_processors.request', #includes request in RequestContext
+    'explainthis.questions.ctxproc.setting', #includes request in RequestContext
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django_rpx_plus.backends.RpxBackend', 
+    'django.contrib.auth.backends.ModelBackend', #default django auth
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -78,7 +100,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'instamedia.urls'
+ROOT_URLCONF = 'explainthis.urls'
+
+BASE_DOMAIN = "http://dev.explainthis.org:8000"
+
+RPXNOW_API_KEY = "ab03bbe55691bf7ea5535a176848c99c39548c1e"
+RPXNOW_APPLICATION_ID = "bgfakdbceknakngdnhgj"
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -93,23 +120,44 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.comments',
+    'ajaxcomments',
+    'django.contrib.admin',
+    'explainthis.questions',
+    'django_rpx_plus',
+    'compress',
+    'voting',
+    'uni_form',
+    'taggit'
+    
 )
 
-
+REGISTER_URL = '/accounts/register/'
+RPXNOW_REALM = 'dev-explainthis'
+AUTH_PROFILE_MODULE = "questions.UserProfile"
 COMPRESS_CSS = {
     'main': {
         'source_filenames': (
             'css/lib/yui/reset-min.css',
-            'css/lib/oocss/core/grids.css',
+            'css/lib/oocss/core/grid/grids.css',
+            'css/lib/oocss/core/template/template.css',
             'css/main.css'
         ),
         'output_filename': 'css/main_compressed.css',
         'extra_context': {
             'media': 'screen,projection',
         },
-    }
+    },
+    'forms': {
+        'source_filenames': (
+            'css/uni-form-generic.css',
+            'css/uni-form.css'
+        ),
+        'output_filename': 'css/form_compressed.css',
+        'extra_context': {
+            'media': 'screen,projection',
+        },
+    },
     # other CSS groups goes here
 }
 
@@ -120,12 +168,27 @@ COMPRESS_JS = {
             'js/main.js',          
         ),
         'output_filename': 'js/base_compressed.js',
+    },
+    'comments': {
+        'source_filenames': (
+            'js/post-comment.js',
+            'js/comment.js',          
+        ),
+        'output_filename': 'js/comments_compressed.js',
+    },
+    'site_frontpage': {
+        'source_filenames': (
+            'js/lib/jquery-1.4.2.min.js',
+            'js/lib/NobleCount/js/jquery.NobleCount.js',
+            'js/site_frontpage.js'
+        ),
+        'output_filename': 'js/site_frontpage_compressed.js',
     }
 }
 COMPRESS = True
 COMPRESS_AUTO = True
 
-
+COMPRESS_CSS_FILTERS = None
 
 
 

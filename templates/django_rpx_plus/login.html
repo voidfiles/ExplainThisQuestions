@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load rpx %}
+
+{% block mainContentPrepend %}
+{% endblock mainContentPrepend %}
+{% block mainContent %}
+<div id="login_box"><!-- extra wrapper for centering -->
+    <h2>Login to <a href="{% url home %}">Example App</a></h2>
+    <h3 class="s4">Select of these third-party accounts.</h3>
+	<ul class="block_list channel_list">
+		<li class="medium channel_logo login_logo">
+			<form method="POST" action="https://{{settings.RPXNOW_REALM}}.rpxnow.com/openid/start">
+				<input name="token_url" value="{{settings.BASE_DOMAIN}}{% url rpx_response %}?next={{request.GET.next}}" type="hidden">
+				<input name="use_ajax" value="false" type="hidden">
+				<input name="popup_mode" value="false" type="hidden">
+				<input name="immediate" value="false" type="hidden">
+				<input name="openid_identifier" value="https://www.google.com/accounts/o8/id" type="hidden">
+				<input name="force_reauth" value="false" type="hidden">
+				<button type="submit" class="auth_logo_sprite sprite-google ui-corner-all">Google</button>
+			</form>
+		</li>
+		<li class="medium channel_logo login_logo">
+			<form method="POST" action="https://{{settings.RPXNOW_REALM}}.rpxnow.com/openid/start">
+				<input name="token_url" value="{{settings.BASE_DOMAIN}}{% url rpx_response %}?next={{request.GET.next}}" type="hidden">
+				<input name="use_ajax" value="false" type="hidden">
+				<input name="popup_mode" value="false" type="hidden">
+				<input name="immediate" value="false" type="hidden">
+				<input name="openid_identifier" value="http://yahoo.com" type="hidden">
+				<input name="force_reauth" value="false" type="hidden">
+				<button type="submit" class="auth_logo_sprite sprite-yahoo ui-corner-all">Yahoo</button>
+			</form>
+		</li>
+		<li class="medium channel_logo login_logo">
+			{% url rpx_response as rpx_url %}
+			<a href="https://{{settings.RPXNOW_REALM}}.rpxnow.com/facebook/start?token_url={{settings.BASE_DOMAIN}}{{ rpx_url|urlencode }}%3Fnext%3D{{request.GET.next}}" class="auth_logo_sprite sprite-facebook ui-corner-all">Facebook</a>
+		</li>
+		<li class="medium channel_logo login_logo">
+			<a href="https://{{settings.RPXNOW_REALM}}.rpxnow.com/twitter/start?token_url={{settings.BASE_DOMAIN}}{{ rpx_url|urlencode }}%3Fnext%3D{{request.GET.next}}" class="auth_logo_sprite sprite-twitter ui-corner-all">Twitter</a>
+		</li>
+		<li class="medium channel_logo login_logo">
+			<a href="https://{{settings.RPXNOW_REALM}}.rpxnow.com/myspace/start?token_url={{settings.BASE_DOMAIN}}{{ rpx_url|urlencode }}%3Fnext%3D{{request.GET.next}}" class="auth_logo_sprite sprite-myspace ui-corner-all">Myspace</a>
+		</li>
+	</ul>
+    {% if messages %}
+    <div id="messages">
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% rpx_embed extra %}
+</div>
+{% endblock mainContent %}
+
